@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:infinispan:config:14.0 https://infinispan.org"
+        xmlns="urn:infinispan:config:14.0">
+
+    <cache-container name="keycloak">
+        <!-- Modern Keycloak 26 clustering configuration properties -->
+        <transport lock-timeout="60000" cluster="infinispan-cluster" site="site1"/>
+
+        <local-cache name="realms">
+            <encoding>
+                <key media-type="application/x-java-object"/>
+                <value media-type="application/x-java-object"/>
+            </encoding>
+            <memory max-count="10000"/>
+        </local-cache>
+
+        <local-cache name="users">
+            <encoding>
+                <key media-type="application/x-java-object"/>
+                <value media-type="application/x-java-object"/>
+            </encoding>
+            <memory max-count="10000"/>
+        </local-cache>
+
+        <local-cache name="authorization">
+            <encoding>
+                <key media-type="application/x-java-object"/>
+                <value media-type="application/x-java-object"/>
+            </encoding>
+            <memory max-count="10000"/>
+        </local-cache>
+
+        <local-cache name="keys">
+            <encoding>
+                <key media-type="application/x-java-object"/>
+                <value media-type="application/x-java-object"/>
+            </encoding>
+            <expiration max-idle="3600000"/>
+            <memory max-count="1000"/>
+        </local-cache>
+
+        <!-- Distributed Caches utilizing remote external stores -->
+        <distributed-cache name="sessions" owners="1">
+            <expiration lifespan="-1"/>
+            <persistence>
+                <remote-store xmlns="urn:infinispan:config:store:remote:14.0"
+                              cache="sessions"
+                              fetch-state="false"
+                              purge="false"
+                              preload="false"
+                              segmented="false"
+                              shared="true"
+                              raw-values="true"
+                              marshaller="org.keycloak.cluster.infinispan.KeycloakHotRodMarshallerFactory">
+                    <remote-server host="infinispan-kc21" port="11222" />
+                    <security>
+                        <authentication server-name="infinispan">
+                            <digest username="admin" password="password" realm="default"/>
+                        </authentication>
+                    </security>
+                </remote-store>
+            </persistence>
+        </distributed-cache>
+
+        <distributed-cache name="authenticationSessions" owners="1">
+            <expiration lifespan="-1"/>
+            <persistence>
+                <remote-store xmlns="urn:infinispan:config:store:remote:14.0"
+                              cache="authenticationSessions"
+                              fetch-state="false"
+                              purge="false"
+                              preload="false"
+                              segmented="false"
+                              shared="true"
+                              raw-values="true"
+                              marshaller="org.keycloak.cluster.infinispan.KeycloakHotRodMarshallerFactory">
+                    <remote-server host="infinispan-kc21" port="11222" />
+                    <security>
+                        <authentication server-name="infinispan">
+                            <digest username="admin" password="password" realm="default"/>
+                        </authentication>
+                    </security>
+                </remote-store>
+            </persistence>
+        </distributed-cache>
+
+        <distributed-cache name="offlineSessions" owners="1">
+            <expiration lifespan="-1"/>
+            <persistence>
+                <remote-store xmlns="urn:infinispan:config:store:remote:14.0"
+                              cache="offlineSessions"
+                              fetch-state="false"
+                              purge="false"
+                              preload="false"
+                              segmented="false"
+                              shared="true"
+                              raw-values="true"
+                              marshaller="org.keycloak.cluster.infinispan.KeycloakHotRodMarshallerFactory">
+                    <remote-server host="infinispan-kc21" port="11222" />
+                    <security>
+                        <authentication server-name="infinispan">
+                            <digest username="admin" password="password" realm="default"/>
+                        </authentication>
+                    </security>
+                </remote-store>
+            </persistence>
+        </distributed-cache>
+
+        <distributed-cache name="clientSessions" owners="1">
+            <expiration lifespan="-1"/>
+            <persistence>
+                <remote-store xmlns="urn:infinispan:config:store:remote:14.0"
+                              cache="clientSessions"
+                              fetch-state="false"
+                              purge="false"
+                              preload="false"
+                              segmented="false"
+                              shared="true"
+                              raw-values="true"
+                              marshaller="org.keycloak.cluster.infinispan.KeycloakHotRodMarshallerFactory">
+                    <remote-server host="infinispan-kc21" port="11222" />
+                    <security>
+                        <authentication server-name="infinispan">
+                            <digest username="admin" password="password" realm="default"/>
+                        </authentication>
+                    </security>
+                </remote-store>
+            </persistence>
+        </distributed-cache>
+
+        <distributed-cache name="offlineClientSessions" owners="1">
+            <expiration lifespan="-1"/>
+            <persistence>
+                <remote-store xmlns="urn:infinispan:config:store:remote:14.0"
+                              cache="offlineClientSessions"
+                              fetch-state="false"
+                              purge="false"
+                              preload="false"
+                              segmented="false"
+                              shared="true"
+                              raw-values="true"
+                              marshaller="org.keycloak.cluster.infinispan.KeycloakHotRodMarshallerFactory">
+                    <remote-server host="infinispan-kc21" port="11222" />
+                    <security>
+                        <authentication server-name="infinispan">
+                            <digest username="admin" password="password" realm="default"/>
+                        </authentication>
+                    </security>
+                </remote-store>
+            </persistence>
+        </distributed-cache>
+
+        <distributed-cache name="loginFailures" owners="1">
+            <expiration lifespan="-1"/>
+            <persistence>
+                <remote-store xmlns="urn:infinispan:config:store:remote:14.0"
+                              cache="loginFailures"
+                              fetch-state="false"
+                              purge="false"
+                              preload="false"
+                              segmented="false"
+                              shared="true"
+                              raw-values="true"
+                              marshaller="org.keycloak.cluster.infinispan.KeycloakHotRodMarshallerFactory">
+                    <remote-server host="infinispan-kc21" port="11222" />
+                    <security>
+                        <authentication server-name="infinispan">
+                            <digest username="admin" password="password" realm="default"/>
+                        </authentication>
+                    </security>
+                </remote-store>
+            </persistence>
+        </distributed-cache>
+
+        <distributed-cache name="actionTokens" owners="1">
+            <expiration max-idle="-1" lifespan="-1" interval="300000"/>
+            <memory max-count="-1"/>
+            <persistence>
+                <remote-store xmlns="urn:infinispan:config:store:remote:14.0"
+                              cache="actionTokens"
+                              fetch-state="false"
+                              purge="false"
+                              preload="false"
+                              segmented="false"
+                              shared="true"
+                              raw-values="true"
+                              marshaller="org.keycloak.cluster.infinispan.KeycloakHotRodMarshallerFactory">
+                    <remote-server host="infinispan-kc21" port="11222" />
+                    <security>
+                        <authentication server-name="infinispan">
+                            <digest username="admin" password="password" realm="default"/>
+                        </authentication>
+                    </security>
+                </remote-store>
+            </persistence>
+        </distributed-cache>
+    </cache-container>
+</infinispan>

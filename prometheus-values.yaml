@@ -1,0 +1,79 @@
+
+server:
+  route:
+    enabled: true
+    host: prometheus.apps.ocp-nprod.gca.gov.sa
+
+  serviceMonitorNamespaceSelector:
+    matchNames:
+      - "confluent-dev"
+      - "customapps"
+  serviceMonitorSelector: {}
+
+  podMonitorNamespaceSelector:
+    matchNames:
+      - "confluent-dev"
+      - "customapps"
+  podMonitorSelector: {}
+
+  probeNamespaceSelector:
+    matchNames:
+      - "confluent-dev"
+      - "customapps"
+  probeSelector: {}
+
+  securityContext:
+    runAsUser: 1000
+    fsGroup: 1000
+
+  persistentVolume:
+    enabled: true
+    size: 8Gi
+    storageClass: "ocs-storagecluster-ceph-rbd"  
+
+  extraArgs: {}
+
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 250m
+    limits:
+      memory: 1Gi
+      cpu: 500m
+
+alertmanager:
+  enabled: true
+  persistentVolume:
+    enabled: true
+    size: 2Gi
+    storageClass: "ocs-storagecluster-ceph-rbd"
+
+pushgateway:
+  enabled: false
+
+# Disable default scraping (we’ll rely on ServiceMonitors and PodMonitors in the specific namespaces)
+extraScrapeConfigs: []
+
+rbac:
+  create: true
+  rules:
+    - apiGroups: [""]
+      resources:
+        - "nodes"
+        - "nodes/metrics"
+        - "services"
+        - "endpoints"
+        - "pods"
+      verbs: ["get", "list", "watch"]
+    - apiGroups: ["extensions"]
+      resources: ["ingresses"]
+      verbs: ["get", "list", "watch"]
+    - apiGroups: ["monitoring.coreos.com"]
+      resources:
+        - "servicemonitors"
+        - "podmonitors"
+        - "probes"
+      verbs: ["get", "list", "watch"]
+    - apiGroups: [""]
+      resources: ["configmaps"]
+      verbs: ["get"]

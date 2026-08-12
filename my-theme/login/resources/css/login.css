@@ -1,0 +1,204 @@
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #f3f4f6;
+}
+
+.login-header h1 {
+    font-size: 28px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.form-actions {
+    margin-top: 10px;
+}
+
+.form-actions button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4c6ef5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-footer-links {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.login-footer-links a {
+    color: #4c6ef5;
+    text-decoration: none;
+}
+
+.custom-login-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-actions {
+    margin-top: 1.5rem;
+}
+
+.otp-custom-text {
+    font-size: 0.9rem;
+    color: #6a6e73;
+    margin-bottom: 1rem;
+}
+
+.checklogin {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    width: 79%;
+}
+
+input.checkbox-of-login {
+    width: 16px !important;
+    height: 16px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.custom-login-page {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    flex-wrap: wrap;
+}
+
+.custom-login-left,
+.custom-login-right {
+    flex: 1 1 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
+/* Left section with image */
+
+.custom-login-left {
+    background-color: #f0f4ff;
+}
+
+.custom-login-left img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: contain;
+}
+
+
+/* Right login form section */
+
+.custom-login-right {
+    background-color: white;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+}
+
+.custom-login-error-page {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    height: 100vh;
+    flex-wrap: wrap;
+    background-color: #f0f4ff;
+}
+
+.login-error-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    background: white;
+}
+
+.login-error-header h1 {
+    font-size: 28px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.error-msg-login {
+    color: red;
+    align-items: center;
+    text-align: center;
+}
+
+.verify-msg-login {
+    align-items: center;
+    text-align: center;
+}
+
+.verify-msg-login b {
+    color: #4c6ef5;
+}
+
+.alert-text {
+    color: red;
+}
+
+
+/* Responsive layout */
+
+@media (max-width: 768px) {
+    .custom-login-page {
+        height: auto;
+        min-height: 100vh;
+    }
+    .custom-login-left,
+    .custom-login-right {
+        flex: 1 1 100%;
+        padding: 20px;
+    }
+    .custom-login-left img {
+        max-width: 70%;
+        margin-bottom: 20px;
+    }
+    .custom-login-error-page {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+}
