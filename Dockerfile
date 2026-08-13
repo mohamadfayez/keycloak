@@ -32,7 +32,7 @@ COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 # Embedded H2 configuration
 ENV KC_DB=dev-file
-
+EXPOSE 8080
 # Admin user
 ENV KEYCLOAK_ADMIN=admin
 ENV KEYCLOAK_ADMIN_PASSWORD=admin123
