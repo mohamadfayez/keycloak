@@ -7,8 +7,6 @@ WORKDIR /opt/keycloak
 
 # Custom provider
 COPY providers-1.0.0.jar /opt/keycloak/providers/
-
-# Certificates
 COPY truststore.jks /opt/keycloak/conf/truststore.jks
 COPY application.keystore /opt/keycloak/conf/application.keystore
 
