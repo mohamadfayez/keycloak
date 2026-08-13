@@ -11,7 +11,7 @@ COPY my-theme /opt/keycloak/themes/my-theme/
 #RUN /opt/keycloak/bin/kc.sh build --features=dynamic-scopes
 RUN /opt/keycloak/bin/kc.sh build --features="dynamic-scopes" --db=oracle  --spi-x509cert-lookup-provider=apache --cache-config-file=cache-ispn-keycloak.xml
 
-FROM quay.io/keycloak/keycloak:24.0.0
+FROM quay.io/keycloak/keycloak:26.7.1
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--optimized", \
@@ -33,5 +33,5 @@ ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--optimized", \
 #   "--https-trust-store-file", "/opt/keycloak/conf/truststore.jks", \
 #   "--https-trust-store-password=password"]
 
-# docker build -t quay.io/aelfax/apim-keycloak:v2024-v2 .
-# docker push quay.io/aelfax/apim-keycloak:v2024-v2
+# docker build -t quay.io/aelfax/apim-keycloak:v26.7.1 .
+# docker push quay.io/aelfax/apim-keycloak:v26.7.1
