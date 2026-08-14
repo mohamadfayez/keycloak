@@ -6,7 +6,7 @@ FROM quay.io/keycloak/keycloak:26.7.1 as builder
 WORKDIR /opt/keycloak
 
 # Custom provider
-COPY providers-1.0.0.jar /opt/keycloak/providers/
+COPY providers-1.2.0.jar /opt/keycloak/providers/
 COPY truststore.jks /opt/keycloak/conf/truststore.jks
 COPY application.keystore /opt/keycloak/conf/application.keystore
 
