@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  oracle-db:
+    image: gvenzl/oracle-free:latest
+    container_name: oracle-db
+    ports:
+      - "1521:1521"
+    environment:
+      - ORACLE_PASSWORD=system
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  keycloak:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: keycloak
+    ports:
+      - "8443:8443"
+    environment:
+      # Database Target Settings
+      - KC_DB=oracle
+      - KC_DB_URL=jdbc:oracle:thin:@oracle-db:1521/FREEPDB1
+      - KC_DB_USERNAME=system
+      - KC_DB_PASSWORD=system
+
+      # Admin Account Settings
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    depends_on:
+      oracle-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  oracle_data:
+    driver: local

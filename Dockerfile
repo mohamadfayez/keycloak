@@ -6,7 +6,7 @@ FROM quay.io/keycloak/keycloak:26.7.1 as builder
 WORKDIR /opt/keycloak
 
 # Custom provider
-COPY providers-1.0.0.jar /opt/keycloak/providers/
+COPY providers-1.2.0.jar /opt/keycloak/providers/
 COPY truststore.jks /opt/keycloak/conf/truststore.jks
 COPY application.keystore /opt/keycloak/conf/application.keystore
 
@@ -16,10 +16,10 @@ COPY cache-ispn-keycloak.xml /opt/keycloak/conf/cache-ispn-keycloak.xml
 # Theme
 COPY my-theme /opt/keycloak/themes/my-theme/
 
-# Build with embedded H2
+# Build optimized for Oracle Database vendor specs
 RUN /opt/keycloak/bin/kc.sh build \
     --features="parameterized-scopes" \
-    --db=dev-file \
+    --db=oracle \
     --spi-x509cert-lookup-provider=apache \
     --cache-config-file=cache-ispn-keycloak.xml
 
@@ -30,11 +30,9 @@ FROM quay.io/keycloak/keycloak:26.7.1
 
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
-# Embedded H2 configuration
-ENV KC_DB=dev-file
-# Admin user
+# Admin user credentials
 ENV KEYCLOAK_ADMIN=admin
-ENV KEYCLOAK_ADMIN_PASSWORD=admin123
+ENV KEYCLOAK_ADMIN_PASSWORD=admin
 
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--optimized", \
   "--https-key-store-file=/opt/keycloak/conf/application.keystore", \
